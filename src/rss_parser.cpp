@@ -315,6 +315,10 @@ void rss_parser::fill_feed_items(std::shared_ptr<rss_feed> feed) {
 				x->set_unread_nowrite(false);
 				x->set_override_unread(true);
 			}
+			if (std::find(start, finish, "ocnews:starred") != finish) {
+				x->set_flags(cfgcont->get_configvalue("ocnews-flag-star"));
+				x->update_flags();
+			}
 		}
 
 		set_item_content(x, item);

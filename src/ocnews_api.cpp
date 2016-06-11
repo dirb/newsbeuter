@@ -214,6 +214,12 @@ rsspp::feed ocnews_api::fetch_feed(const std::string& feed_id) {
 			item.labels.push_back("ocnews:read");
 		}
 
+		json_object_object_get_ex(item_j, "starred", &node);
+		bool starred = json_object_get_boolean(node);
+		if (starred) {
+			item.labels.push_back("ocnews:starred");
+		}
+
 		json_object_object_get_ex(item_j, "pubDate", &node);
 		time_t updated = (time_t)json_object_get_int(node);
 		char rfc822_date[128];
