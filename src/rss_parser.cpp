@@ -275,6 +275,8 @@ void rss_parser::fill_feed_items(std::shared_ptr<rss_feed> feed) {
 		x->set_feedurl(feed->rssurl());
 		x->set_feedptr(feed);
 
+		x->set_guid(get_guid(item));
+
 		if ((f.rss_version == rsspp::ATOM_1_0 || f.rss_version == rsspp::TTRSS_JSON || f.rss_version == rsspp::NEWSBLUR_JSON || f.rss_version == rsspp::OCNEWS_JSON) && item.labels.size() > 0) {
 			auto start = item.labels.begin();
 			auto finish = item.labels.end();
@@ -327,8 +329,6 @@ void rss_parser::fill_feed_items(std::shared_ptr<rss_feed> feed) {
 			x->set_pubDate(parse_date(item.pubDate));
 		else
 			x->set_pubDate(::time(NULL));
-
-		x->set_guid(get_guid(item));
 
 		x->set_base(item.base);
 

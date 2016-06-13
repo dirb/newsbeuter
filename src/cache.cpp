@@ -647,11 +647,11 @@ void cache::update_rssitem_unlocked(std::shared_ptr<rss_item> item, const std::s
 			throw dbexception(db);
 		}
 	} else {
-		std::string insert = prepare_query("INSERT INTO rss_item (guid,title,author,url,feedurl,pubDate,content,unread,enclosure_url,enclosure_type,enqueued, base) "
-		                                   "VALUES ('%q','%q','%q','%q','%q','%u','%q','%d','%q','%q',%d, '%q')",
+		std::string insert = prepare_query("INSERT INTO rss_item (guid,title,author,url,feedurl,pubDate,content,unread,enclosure_url,enclosure_type,enqueued, base, flags) "
+						   "VALUES ('%q','%q','%q','%q','%q','%u','%q','%d','%q','%q',%d, '%q', '%q')",
 		                                   item->guid().c_str(), item->title_raw().c_str(), item->author_raw().c_str(),
 		                                   item->link().c_str(), feedurl.c_str(), item->pubDate_timestamp(), item->description_raw().c_str(), (item->unread() ? 1 : 0),
-		                                   item->enclosure_url().c_str(), item->enclosure_type().c_str(), item->enqueued() ? 1 : 0, item->get_base().c_str());
+						   item->enclosure_url().c_str(), item->enclosure_type().c_str(), item->enqueued() ? 1 : 0, item->get_base().c_str(), item->flags().c_str());
 		LOG(LOG_DEBUG,"running query: %s", insert.c_str());
 		rc = sqlite3_exec(db,insert.c_str(),NULL,NULL,NULL);
 		if (rc != SQLITE_OK) {
